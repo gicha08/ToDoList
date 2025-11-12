@@ -1,0 +1,10 @@
+I'd like to create a web application that allows users to create and manage a to-do list. The app should have the following features:
+
+1. Users should be able to add tasks to the to-do list.
+2. Users should be able to mark tasks as completed.
+3. Users should be able to delete tasks from the to-do list.
+4. Users should be able to edit the text of tasks.      
+5. The app should have a user interface that is easy to use and visually appealing.    
+6. The app should have a responsive design that works well on different screen sizes.        
+7. The app should have a clean and well-organized codebase. 
+8. Use HTML, CSS, and JavaScript to build the app.

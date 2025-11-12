@@ -1,0 +1,107 @@
+/* Basic Reset and Container Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6; /* Light background */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the top */
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px; /* Max width for desktop */
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Area Styling (Feature 6: Responsive Design) */
+.input-area {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#taskInput {
+    flex-grow: 1; /* Take up most of the space */
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px 0 0 4px; /* Rounded on the left */
+    font-size: 16px;
+}
+
+#addTaskButton {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0; /* Rounded on the right */
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Task List Styling */
+#taskList {
+    list-style: none;
+    padding: 0;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.task-text {
+    flex-grow: 1;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* Completed Task Styling (Feature 2) */
+.completed .task-text {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+/* Action Buttons (Edit, Delete) */
+.actions button {
+    margin-left: 8px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Media Query for smaller screens (Feature 6: Responsive Design) */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    .input-area {
+        flex-direction: column;
+    }
+    #addTaskButton {
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+}
