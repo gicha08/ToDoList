@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Supabase Example</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+    input, button { margin: 5px 0; padding: 8px; width: 100%; }
+    #notes div { background: #f1f1f1; padding: 8px; margin: 6px 0; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>🔐 Supabase Demo</h1>
+
+  <!-- Sign Up / Login -->
+  <h3>Login or Sign Up</h3>
+  <input id="email" type="email" placeholder="Email" />
+  <input id="password" type="password" placeholder="Password" />
+  <button id="signupBtn">Sign Up</button>
+  <button id="loginBtn">Login</button>
+  <button id="logoutBtn">Logout</button>
+
+  <hr />
+
+  <!-- Data Section -->
+  <h3>Add Note</h3>
+  <input id="noteTitle" placeholder="Note title" />
+  <input id="noteContent" placeholder="Note content" />
+  <button id="addNoteBtn">Add Note</button>
+
+  <h4>Saved Notes</h4>
+  <div id="notes"></div>
+
+  <hr />
+
+  <!-- File Upload -->
+  <h3>Upload a File</h3>
+  <input id="fileInput" type="file" />
+  <button id="uploadBtn">Upload File</button>
+  <div id="fileStatus"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // 1️⃣ Initialize Supabase
+    const supabase = window.supabase.createClient(
+      'https://fbokhdckirxuebpwpwwo.supabase.co', // <-- replace with your URL
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZib2toZGNraXJ4dWVicHdwd3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDE5OTMsImV4cCI6MjA3ODU3Nzk5M30.K3l-l5lhQE9kIYuxdTXrEMHDHfHRbRzVV7nHjT8P9Oc' // <-- replace with your anon key
+    );
+
+    // 2️⃣ Authentication
+    const emailEl = document.getElementById('email');
+    const passEl = document.getElementById('password');
+
+    document.getElementById('signupBtn').onclick = async () => {
+      const { error } = await supabase.auth.signUp({
+        email: emailEl.value,
+        password: passEl.value
+      });
+      alert(error ? error.message : '✅ Signed up! Check your email to confirm.');
+    };
+
+    document.getElementById('loginBtn').onclick = async () => {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: emailEl.value,
+        password: passEl.value
+      });
+      alert(error ? error.message : '✅ Logged in!');
+      loadNotes();
+    };
+
+    document.getElementById('logoutBtn').onclick = async () => {
+      await supabase.auth.signOut();
+      alert('Logged out.');
+    };
+
+    // 3️⃣ Notes (Database)
+    document.getElementById('addNoteBtn').onclick = async () => {
+      const title = document.getElementById('noteTitle').value;
+      const content = document.getElementById('noteContent').value;
+      const { data: { user } } = await supabase.auth.getUser();
+        await supabase.from('notes').insert([
+        { title, content, user_id: user.id }
+        ]);
+
+      if (error) alert(error.message);
+      else loadNotes();
+    };
+
+    async function loadNotes() {
+      const { data: notes, error } = await supabase.from('notes').select('*');
+      const list = document.getElementById('notes');
+      list.innerHTML = '';
+      if (notes) notes.forEach(n => {
+        list.innerHTML += `<div><b>${n.title}</b><br>${n.content}</div>`;
+      });
+    }
+
+    // 4️⃣ File upload (Storage)
+    document.getElementById('uploadBtn').onclick = async () => {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (!file) return alert('Please choose a file.');
+      const { error } = await supabase.storage.from('uploads').upload(`userfiles/${file.name}`, file);
+      document.getElementById('fileStatus').innerText = error ? error.message : `✅ Uploaded: ${file.name}`;
+    };
+
+    // Load existing notes on start (if logged in)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) loadNotes();
+    });
+  </script>
+</body>
+</html>
+
