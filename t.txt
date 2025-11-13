@@ -1,0 +1,18 @@
+const { data, error } = await supabase.auth.signInWithPassword({
+        email: 'gicha08@gmail.com',
+        password: 'dlrgus08B'
+      });
+const { data, error } = await supabase.auth.signInWithPassword({
+        email: 'ipark@ucmo.edu',
+        password: 'GM82~wz57'
+      });
+
+
+const supabase = window.supabase.createClient(
+    'https://fbokhdckirxuebpwpwwo.supabase.co', // <-- replace with your URL
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZib2toZGNraXJ4dWVicHdwd3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDE5OTMsImV4cCI6MjA3ODU3Nzk5M30.K3l-l5lhQE9kIYuxdTXrEMHDHfHRbRzVV7nHjT8P9Oc' // <-- replace with your anon key
+);
+
+const SUPABASE_URL = 'https://fbokhdckirxuebpwpwwo.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiIsImZib2toZGNraXJ4dWVicHdwd3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMDE5OTMsImV4cCI6MjA3ODU3Nzk5M30.K3l-l5lhQE9kIYuxdTXrEMHDHfHRbRzVV7nHjT8P9Oc';
+const supabase1 = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
