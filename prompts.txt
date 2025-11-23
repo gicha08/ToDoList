@@ -1,3 +1,4 @@
+(Winsurf generated prompts as I began to write))
 I'd like to create a web application that allows users to create and manage a to-do list. The app should have the following features:
 
 1. Users should be able to add tasks to the to-do list.
@@ -8,3 +9,35 @@ I'd like to create a web application that allows users to create and manage a to
 6. The app should have a responsive design that works well on different screen sizes.        
 7. The app should have a clean and well-organized codebase. 
 8. Use HTML, CSS, and JavaScript to build the app.
+
+(for chatGPT)
+I want to connect to Supabase database. Show me PostgreSQL statements to create a table need to save todo list.
+
+Explain the trigger. What kind of operation trigger what?
+
+Failed to run sql query: ERROR: 42883: function trigger_set_timestamp() does not exist
+
+I want to add login, signup, log out menu to the HTML
+
+(for Gemini)
+Your To-Do app doesn't seem to save task anywhere. Am I right?
+
+I want to have my web homepage look like YouTube homepage.
+The header at the top has
+- a hamburger menu icon, logo image on the left. 
+- search text input in the middle,
+- an icon for setting and a sign-in button on the right.
+
+The sidebard on the left has
+- Home
+- My Videos
+- Shared with me
+- Favorites
+- Tools
+- Orders
+The sidebard collapses to the left or expand when the hamburger menu in the header is clicked.
+
+Can you make it as a single HTML file?
+
+
+

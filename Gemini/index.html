@@ -3,22 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple To-Do List</title>
-    <link rel="stylesheet" href="style.css">
+    <title>My YouTube-Style Homepage</title>
+
+    <style>
+        /* CSS STYLING */
+        :root {
+            --header-height: 56px;
+            --sidebar-width-expanded: 240px;
+            --sidebar-width-collapsed: 72px;
+            --yt-blue: #065fd4;
+        }
+
+        /* Basic Reset and Variables */
+        body {
+            margin: 0;
+            font-family: Roboto, Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        /* 1. Header Styling (Top Bar) */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            height: var(--header-height);
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        /* Left Section */
+        .header-left {
+            display: flex;
+            align-items: center;
+            /* Placeholder for a YouTube-like logo */
+            font-weight: bold;
+            font-size: 20px;
+            color: #282828;
+            margin-right: 20px;
+        }
+
+        .menu-icon {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-right: 15px;
+        }
+
+        /* Center Section (Search) */
+        .header-center {
+            flex-grow: 1;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 20px 0 0 20px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            background-color: #f8f8f8;
+            font-size: 16px;
+        }
+
+        /* Right Section */
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .settings-icon {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 5px;
+        }
+
+        .signin-button {
+            background-color: transparent;
+            border: 1px solid var(--yt-blue);
+            color: var(--yt-blue);
+            padding: 8px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* 2. Main Content Area (Sidebar and Body) */
+        .main-container {
+            display: flex;
+            padding-top: var(--header-height); /* Offset the fixed header */
+        }
+
+        .sidebar {
+            width: var(--sidebar-width-expanded);
+            height: calc(100vh - var(--header-height));
+            position: fixed;
+            left: 0;
+            top: var(--header-height);
+            background-color: #fff;
+            padding-top: 10px;
+            transition: width 0.3s, transform 0.3s;
+            overflow-y: auto;
+            border-right: 1px solid #eee;
+            z-index: 999;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 25px;
+            text-decoration: none;
+            color: #000;
+            font-size: 14px;
+            font-weight: 400;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background-color: #eee;
+        }
+        
+        .sidebar-item-icon {
+            margin-right: 15px;
+            font-size: 18px; /* For the emoji icons */
+        }
+
+        .content {
+            margin-left: var(--sidebar-width-expanded); /* Offset for expanded sidebar */
+            padding: 20px;
+            flex-grow: 1;
+            transition: margin-left 0.3s;
+        }
+
+        /* --- Collapsed State CSS --- */
+        
+        /* When the body has the 'sidebar-collapsed' class: */
+        body.sidebar-collapsed .sidebar {
+            width: var(--sidebar-width-collapsed);
+        }
+
+        /* Hide the item text, leaving only the icon */
+        body.sidebar-collapsed .sidebar-item-text {
+            display: none;
+        }
+        
+        /* Center the icon/link in the collapsed view */
+        body.sidebar-collapsed .sidebar-item {
+            justify-content: center;
+            padding: 10px 0;
+        }
+        
+        body.sidebar-collapsed .sidebar-item-icon {
+            margin-right: 0;
+        }
+
+        /* Adjust the main content margin to account for the smaller sidebar */
+        body.sidebar-collapsed .content {
+            margin-left: var(--sidebar-width-collapsed);
+        }
+        .header-center {
+            flex-grow: 1;
+            max-width: 600px;
+            display: flex;
+            align-items: stretch; /* KEY: Makes children (input/button) stretch to fill the container height */
+        }
+
+        .search-input {
+            /* Existing Styles */
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 20px 0 0 20px;
+            width: 100%;
+            font-size: 16px;
+            
+            /* NEW: Explicitly setting height properties for better alignment */
+            height: 34px; /* Set an explicit height */
+            box-sizing: border-box; /* IMPORTANT: Makes padding/border included in the 34px height */
+        }
+
+        .search-button {
+            /* Existing Styles */
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            
+            /* NEW: Mirroring the input's height properties */
+            height: 34px; /* Set the same height as the input */
+            box-sizing: border-box; /* IMPORTANT: Ensures height calculation is consistent */
+            
+            /* Fixes vertical alignment of the icon inside the button */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>My To-Do List</h1>
-        
-        <div class="input-area">
-            <input type="text" id="taskInput" placeholder="Add a new task...">
-            <button id="addTaskButton">Add Task</button>
+
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-icon" id="menu-toggle" title="Menu">&#9776;</button>
+            <div class="logo">MyTube</div> </div>
+
+        <div class="header-center">
+            <input type="text" placeholder="Search" class="search-input">
+            <button class="search-button" title="Search">🔍</button>
         </div>
-        
-        <ul id="taskList">
-            </ul>
+
+        <div class="header-right">
+            <button class="settings-icon" title="Settings">⚙️</button>
+            <button class="signin-button">Sign In</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <a href="#" class="sidebar-item active">
+                <span class="sidebar-item-icon">🏠</span>
+                <span class="sidebar-item-text">Home</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-item-icon">📹</span>
+                <span class="sidebar-item-text">My Videos</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-item-icon">🤝</span>
+                <span class="sidebar-item-text">Shared with me</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-item-icon">⭐</span>
+                <span class="sidebar-item-text">Favorites</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-item-icon">🔧</span>
+                <span class="sidebar-item-text">Tools</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-item-icon">📦</span>
+                <span class="sidebar-item-text">Orders</span>
+            </a>
+        </nav>
+
+        <main class="content">
+            <h2>Your Awesome Content Goes Here!</h2>
+            <p>This area shifts left and right as the sidebar expands and collapses.</p>
+            <div style="height: 1000px; padding: 20px; background-color: #fff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <p>Example Content Block</p>
+            </div>
+        </main>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // JAVASCRIPT FOR COLLAPSING SIDEBAR
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            // Toggles the 'sidebar-collapsed' class on the body element.
+            // The CSS then handles the appearance and margin changes based on this class.
+            document.body.classList.toggle('sidebar-collapsed');
+            
+        });
+    </script>
 </body>
 </html>
